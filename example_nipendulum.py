@@ -8,7 +8,7 @@ import matplotlib.animation as animation
 ## Set-up your problem
 steps = 1000
 ts = np.linspace(-5, 10, steps) # Simulation time
-yinit = (0.1, 0) # Initial condition (th_0, w_0)
+yinit = (0, 0) # Initial condition (th_0, w_0)
 g = 9.8 # Acceleration of gravity
 l = 1 # Pendulum length
 

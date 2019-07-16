@@ -56,3 +56,31 @@ def test_undamped_pendulum():
 
     assert(last_theta != pytest.approx(0.0, tol))
     assert(last_w != pytest.approx(0.0, tol))
+
+def test_ni_pendulum_no_acceleration():
+    ''' Tests the non inertial pendulum with no acceleration
+    '''
+    ts = np.linspace(0, 10, 1000) # Simulation time
+    yinit = (0, 0) # Initial condition (th_0, w_0)
+    forc_x = lambda t : 1.0*t # Uniform speed
+    forc_y = lambda t : 2.0*t
+
+    # The dynamics should be the same by virtue of Galileo's relativity
+    f_inertial = lambda state, t : pendulum(state, t)
+    f_non_intertial = lambda state, t : ni_pendulum(state, t, forc_x, forc_y)
+
+    assert(f_inertial(yinit, 0.0) == f_non_intertial(yinit, 0.0))
+
+def test_ni_pendulum():
+    ''' Tests the non inertial pendulum with acceleration
+    '''
+    ts = np.linspace(0, 10, 1000) # Simulation time
+    yinit = (0, 0) # Initial condition (th_0, w_0)
+    forc_x = lambda t : 1.0*t**2 # Accelerated movement
+    forc_y = lambda t : 2.0*t
+
+    # The dynamics should be the same by virtue of Galileo's relativity
+    f_inertial = lambda state, t : pendulum(state, t)
+    f_non_intertial = lambda state, t : ni_pendulum(state, t, forc_x, forc_y)
+
+    assert(f_inertial(yinit, 0.0) != f_non_intertial(yinit, 0.0))
