@@ -79,7 +79,7 @@ def test_ni_pendulum():
     forc_x = lambda t : 1.0*t**2 # Accelerated movement
     forc_y = lambda t : 2.0*t
 
-    # The dynamics should be the same by virtue of Galileo's relativity
+    # The dynamics should be different
     f_inertial = lambda state, t : pendulum(state, t)
     f_non_intertial = lambda state, t : ni_pendulum(state, t, forc_x, forc_y)
 
