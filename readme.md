@@ -4,4 +4,9 @@
 # Pendulum simulator
 Mechanical simulation of pendula
 
-![](figs/pendulum.gif)
+## Damped pendulum
+![](figs/damped.gif)
+
+## Non-inertial pendula
+![](figs/displacement.gif)
+![](figs/slingshot.gif)
