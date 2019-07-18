@@ -48,6 +48,6 @@ def ni_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8,
 
     th, w = state
     dydt = [w,
-            -g/l * np.sin(th)  - d * w - accel_x(t) * np.cos(th) - accel_y(t) * np.sin(th)]
+            -g/l * np.sin(th)  - d * w - accel_x(t) * np.cos(th) / l  - accel_y(t) * np.sin(th) / l]
 
     return dydt
