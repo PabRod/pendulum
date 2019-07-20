@@ -57,6 +57,27 @@ def test_undamped_pendulum():
     assert(last_theta != pytest.approx(0.0, tol))
     assert(last_w != pytest.approx(0.0, tol))
 
+def test_freefall_pendulum():
+    ''' Check the solution for a free-falling non-inertial pendulum
+    '''
+    tol = 1e-4
+
+    ## Set-up your problem
+    steps = 1000
+    ts = np.linspace(0, 10, steps) # Simulation time
+    yinit = (np.pi/2, 0) # Initial condition (th_0, w_0)
+    g = 9.8 # Acceleration of gravity
+
+    pos_x = lambda t : 0.0*t # Pivot's position
+    pos_y = lambda t : -g/2*t**2 # Free falling
+
+    f = lambda state, t : ni_pendulum(state, t, pos_x, pos_y, is_acceleration = False, g = g) # Dynamical equation as a function of (state, t)
+
+    ## Solve it
+    sol = odeint(f, yinit, ts)
+
+    assert(sol[-1, 0] == pytest.approx(np.pi/2, tol))
+
 def test_ni_pendulum_no_acceleration():
     ''' Tests the non inertial pendulum with no acceleration
     '''
