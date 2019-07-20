@@ -76,7 +76,8 @@ def test_freefall_pendulum():
     ## Solve it
     sol = odeint(f, yinit, ts)
 
-    assert(sol[-1, 0] == pytest.approx(np.pi/2, tol))
+    ## No relative movement is expected
+    assert(sol[-1, 0] == pytest.approx(yinit[0], tol))
 
 def test_ni_pendulum_no_acceleration():
     ''' Tests the non inertial pendulum with no acceleration
