@@ -106,3 +106,19 @@ def test_ni_pendulum():
     f_non_intertial = lambda state, t : ni_pendulum(state, t, forc_x, forc_y)
 
     assert(f_inertial(yinit, 0.0) != f_non_intertial(yinit, 0.0))
+
+@pytest.mark.parametrize("input, exp_output", [
+    ((0, 0, 0, 0), (0, 0, 0, 0)), # Stable equilibrium
+    ((np.pi, 0, 0, 0), (0, 0, 0, 0)),  # Unstable equilibria
+    ((0, 0, np.pi, 0), (0, 0, 0, 0)),
+    ((np.pi, 0, np.pi, 0), (0, 0, 0, 0))
+])
+def test_double_pendulum(input, exp_output):
+    ''' Test the equilibrium solutions
+    '''
+    tol = 1e-8
+
+    df = double_pendulum(input, 0)
+
+    assert(df == pytest.approx(exp_output, tol)), \
+        'pendulum is not behaving as expected'
