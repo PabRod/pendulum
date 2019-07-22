@@ -10,3 +10,6 @@ Mechanical simulation of pendula
 ## Non-inertial pendula
 ![](figs/displacement.gif)
 ![](figs/slingshot.gif)
+
+## Double pendulum
+![](figs/double.gif)
