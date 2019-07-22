@@ -71,7 +71,7 @@ def double_pendulum(state, t, m=(1, 1), l=(1,1), g=9.8):
     M = np.sum(m)
     (l1, l2) = l
     (m1, m2) = m
-    det = lambda th1, th2 : m2*(l1*l2)**2*(m1 + m2*np.sin(th1-th2))
+    det = lambda th1, th2 : m2*(l1*l2)**2*(m1 + m2*np.sin(th1-th2)**2)
     a = lambda th1, th2 : m2*l2**2 / det(th1, th2)
     b = lambda th1, th2 : -m2*l1*l2*np.cos(th1 - th2) / det(th1, th2)
     d = lambda th1, th2 : M*l1**2 / det(th1, th2)
