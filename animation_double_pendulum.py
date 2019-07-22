@@ -6,10 +6,11 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 ## Set-up your problem
+m = (1, 1)
 l = (1, 1)
 ts = np.linspace(0, 100, 10000) # Simulation time
-yinit = (0, -1, 0, 1) # Initial condition (th_0, w_0)
-f = lambda state, t : double_pendulum(state, t, l = l) # Dynamical equation as a function of (state, t)
+yinit = (np.pi/3, 0, np.pi/2, 0) # Initial condition (th_1, w_1, th_2, w_2)
+f = lambda state, t : double_pendulum(state, t, m = m, l = l) # Dynamical equation as a function of (state, t)
 
 # For using non-default parameters, use
 #
@@ -21,8 +22,8 @@ sol = odeint(f, yinit, ts)
 ## Extract each coordinate
 x_1 = l[0]*np.sin(sol[:, 0]) # Bob's positions
 y_1 = -l[0]*np.cos(sol[:, 0])
-x_2 = x_1 + l[1]*np.sin(sol[:, 1])
-y_2 = y_1 - l[1]*np.cos(sol[:, 1])
+x_2 = x_1 + l[1]*np.sin(sol[:, 2])
+y_2 = y_1 - l[1]*np.cos(sol[:, 2])
 
 ## Animate results
 fig = plt.figure()
