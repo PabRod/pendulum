@@ -7,10 +7,14 @@ import matplotlib.animation as animation
 
 ## Set-up your problem
 m = (2, 1)
-l = (1, 1.5)
+l = (1, 1)
+
+pos_x = lambda t : -2 + np.arctan(3*t - 3*1) - np.arctan(3*t - 3*7)# Pivot's position
+pos_y = lambda t : 0.0*np.sin(5*t**1.1)
+
 ts = np.linspace(0, 10, 1000) # Simulation time
-yinit = (0, 0, np.pi/2, 0) # Initial condition (th_1, w_1, th_2, w_2)
-f = lambda state, t : double_pendulum(state, t, m = m, l = l) # Dynamical equation as a function of (state, t)
+yinit = (0, 0, 0, 0) # Initial condition (th_1, w_1, th_2, w_2)
+f = lambda state, t : ni_double_pendulum(state, t, pos_x, pos_y, is_acceleration=False, m=m, l=l) # Dynamical equation as a function of (state, t)
 
 # For using non-default parameters, use
 #
@@ -20,8 +24,10 @@ f = lambda state, t : double_pendulum(state, t, m = m, l = l) # Dynamical equati
 sol = odeint(f, yinit, ts)
 
 ## Extract each coordinate
-x_1 = l[0]*np.sin(sol[:, 0]) # Bob's positions
-y_1 = -l[0]*np.cos(sol[:, 0])
+x_0 = pos_x(ts) # Pivot's positions
+y_0 = pos_y(ts)
+x_1 = x_0 + l[0]*np.sin(sol[:, 0]) # Bob's positions
+y_1 = y_0 - l[0]*np.cos(sol[:, 0])
 x_2 = x_1 + l[1]*np.sin(sol[:, 2])
 y_2 = y_1 - l[1]*np.cos(sol[:, 2])
 
@@ -44,8 +50,8 @@ def init():
 
 
 def animate(i):
-    xs_1 = [x_1[i], 0.0]
-    ys_1 = [y_1[i], 0.0]
+    xs_1 = [x_1[i], x_0[i]]
+    ys_1 = [y_1[i], y_0[i]]
 
     xs_2 = [x_2[i], x_1[i]]
     ys_2 = [y_2[i], y_1[i]]
@@ -60,9 +66,8 @@ ani = animation.FuncAnimation(fig, animate, np.arange(1, len(ts)),
 
 
 ## Uncomment for saving
-# Set up formatting for the movie files
-#Writer = animation.writers['ffmpeg']
-#writer = Writer(fps=100, metadata=dict(artist='Me'), bitrate=1800)
-#ani.save('im.mp4', writer = writer)
+Writer = animation.writers['ffmpeg']
+writer = Writer(fps=100, metadata=dict(artist='Me'), bitrate=1800)
+ani.save('im.mp4', writer = writer)
 
 plt.show()
