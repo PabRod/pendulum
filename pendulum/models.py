@@ -86,7 +86,7 @@ def double_pendulum(state, t, m=(1, 1), l=(1,1), g=9.8):
     F = lambda th1, w1, th2, w2 : np.matrix([[w1],
                                              [-m2*l1*l2*np.sin(th1-th2)*w2**2 - M*g*l1*np.sin(th1)],
                                              [w2],
-                                             [-m2*l1*l2*np.sin(th1-th2)*w1**2 - m2*g*l2*np.sin(th2)]])
+                                             [m2*l1*l2*np.sin(th1-th2)*w1**2 - m2*g*l2*np.sin(th2)]])
 
     th1, w1, th2, w2 = state
     dydt = np.dot(mat(th1, th2), F(th1, w1, th2, w2))

@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 ## Set-up your problem
-m = (1, 1)
-l = (1, 1)
-ts = np.linspace(0, 100, 10000) # Simulation time
-yinit = (np.pi/3, 0, np.pi/2, 0) # Initial condition (th_1, w_1, th_2, w_2)
+m = (2, 1)
+l = (1, 1.5)
+ts = np.linspace(0, 10, 1000) # Simulation time
+yinit = (0, 0, np.pi/2, 0) # Initial condition (th_1, w_1, th_2, w_2)
 f = lambda state, t : double_pendulum(state, t, m = m, l = l) # Dynamical equation as a function of (state, t)
 
 # For using non-default parameters, use
