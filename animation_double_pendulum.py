@@ -10,7 +10,7 @@ m = (2, 1)
 l = (1, 1)
 
 pos_x = lambda t : -2 + np.arctan(3*t - 3*1) - np.arctan(3*t - 3*7)# Pivot's position
-pos_y = lambda t : 0.0*np.sin(5*t**1.1)
+pos_y = lambda t : 0.0*t
 
 ts = np.linspace(0, 10, 1000) # Simulation time
 yinit = (0, 0, 0, 0) # Initial condition (th_1, w_1, th_2, w_2)
@@ -67,7 +67,7 @@ ani = animation.FuncAnimation(fig, animate, np.arange(1, len(ts)),
 
 ## Uncomment for saving
 Writer = animation.writers['ffmpeg']
-writer = Writer(fps=100, metadata=dict(artist='Me'), bitrate=1800)
-ani.save('im.mp4', writer = writer)
+# writer = Writer(fps=100, metadata=dict(artist='Me'), bitrate=1800)
+# ani.save('im.mp4', writer = writer)
 
 plt.show()

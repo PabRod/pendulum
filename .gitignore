@@ -17,3 +17,7 @@
 /animation
 /vignettes
 *Rproj*
+
+*.mat
+*.m
+*.mp4
