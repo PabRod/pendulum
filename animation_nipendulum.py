@@ -1,7 +1,5 @@
 ## Import the required modules
 from pendulum.models import *
-from scipy.integrate import odeint
-import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 

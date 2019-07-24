@@ -14,11 +14,6 @@ pos_y = lambda t : 0.0*t
 
 ts = np.linspace(0, 10, 1000) # Simulation time
 yinit = (0, 0, 0, 0) # Initial condition (th_1, w_1, th_2, w_2)
-f = lambda state, t : dni_double_pendulum(state, t, pos_x, pos_y, is_acceleration=False, m=m, l=l) # Dynamical equation as a function of (state, t)
-
-# For using non-default parameters, use
-#
-# f = lambda state, t : pendulum(state, t, l = 2)
 
 ## Solve it
 sol = ni_double_pendulum(yinit, ts, pos_x, pos_y, m=m, l=l)
