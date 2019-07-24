@@ -70,6 +70,15 @@ def test_freefall_pendulum():
     ## No relative movement is expected
     assert(sol[-1, 0] == pytest.approx(yinit[0], tol))
 
+    # Repeat test in acceleration mode
+    acc_x = lambda t: 0.0*t # Pivot's acceleration
+    acc_y = lambda t: 0.0*t - g
+
+    sol_2 = ni_pendulum(yinit, ts, acc_x, acc_y, is_acceleration = True, g = g)
+
+    ## No relative movement is expected
+    assert(sol_2[-1, 0] == pytest.approx(yinit[0], tol))
+
 def test_dni_pendulum_no_acceleration():
     ''' Tests the non inertial pendulum with no acceleration
     '''
