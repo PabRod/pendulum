@@ -36,9 +36,9 @@ pytest
 ```
 
 # Getting started
-This is a minimal example of the usage of this package
+This is a minimal example of the usage of this package:
 
-```
+```python
 ## Import the required modules
 from pendulum.models import *
 import matplotlib.pyplot as plt
@@ -63,7 +63,7 @@ plt.legend()
 plt.show()
 ```
 
-For further examples, see:
+For more advanced examples, see:
 
 - [Simple pendulum](example_script.py)
 - [Double pendulum](example_double_pendulum.py)
