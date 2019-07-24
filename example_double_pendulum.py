@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 ## Set-up your problem
 ts = np.linspace(0, 100, 10000) # Simulation time
 yinit = (0, -1, 0, 1) # Initial condition (th_0, w_0)
-f = double_pendulum # Dynamical equation as a function of (state, t)
+f = ddouble_pendulum # Dynamical equation as a function of (state, t)
 
 # For using non-default parameters, use
 #

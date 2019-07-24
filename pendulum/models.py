@@ -1,6 +1,7 @@
 import numpy as np
+from scipy.integrate import odeint
 
-def pendulum(state, t=0, l=1, g=9.8, d=0):
+def dpendulum(state, t=0, l=1, g=9.8, d=0):
     """Returns the dynamical equation of a simple pendulum
 
     Parameters:
@@ -20,13 +21,36 @@ def pendulum(state, t=0, l=1, g=9.8, d=0):
 
     return dydt
 
-def ni_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8, d=0.0, h=1e-4):
+def pendulum(yinit, ts, l=1, g=9.8, d=0, **kwargs):
+    """ Returns the timeseries of a simulated pendulum
+
+    Parameters:
+    yinit: initial conditions (th, w)
+    ts: integration times
+    l: the pendulum's length
+    g: the local acceleration of gravity
+    d: damping constant
+    **kwargs: odeint keyword arguments
+
+    Returns:
+    sol: the simulation's timeseries sol[:, 0] = ths, sol[:, 1] = ws
+    """
+
+    ## Set the problem
+    f = lambda state, t : dpendulum(state, t, l, g, d)
+
+    ## Solve it
+    sol = odeint(f, yinit, ts, **kwargs)
+
+    return sol
+
+def dni_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8, d=0.0, h=1e-4):
     """Returns the dynamical equation of a non inertial pendulum
 
     Parameters:
     state: the state (angle, angular speed)
     t: the time
-    l: the pendulum's lenght
+    l: the pendulum's length
     g: the local acceleration of gravity
     d: the damping constant
     pivot_x: the horizontal position of the pivot
@@ -53,7 +77,34 @@ def ni_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8,
 
     return dydt
 
-def double_pendulum(state, t, m=(1, 1), l=(1,1), g=9.8):
+def ni_pendulum(yinit, ts, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8, d=0.0, h=1e-4, **kwargs):
+    """Returns the timeseries of a simulated non inertial pendulum
+
+    Parameters:
+    yinit: initial conditions (th, w)
+    ts: integration times
+    l: the pendulum's length
+    g: the local acceleration of gravity
+    d: the damping constant
+    pivot_x: the horizontal position of the pivot
+    pivot_y: the vertical position of the pivot
+    is_acceleration: set to True to input pivot accelerations instead of positions
+    h: numerical step for computing numerical derivatives
+    **kwargs: odeint keyword arguments
+
+    Returns:
+    sol: the simulation's timeseries sol[:, 0] = ths, sol[:, 1] = ws
+
+    """
+    ## Set the problem
+    f = lambda state, t : dni_pendulum(state, t, pivot_x, pivot_y, is_acceleration, l, g, d, h)
+
+    ## Solve it
+    sol = odeint(f, yinit, ts, **kwargs)
+
+    return sol
+
+def ddouble_pendulum(state, t, m=(1, 1), l=(1,1), g=9.8):
     """Returns the dynamical equation of a double pendulum
 
     Parameters:
@@ -94,8 +145,31 @@ def double_pendulum(state, t, m=(1, 1), l=(1,1), g=9.8):
     dydt = dydt.reshape(1,4).tolist()[0]
     return dydt
 
-def ni_double_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, m=(1, 1), l=(1,1), g=9.8, h=1e-4):
-    """Returns the dynamical equation of a double pendulum
+def double_pendulum(yinit, ts, m=(1, 1), l=(1,1), g=9.8, **kwargs):
+    """Returns the timeseries of a simulated double pendulum
+
+    Parameters:
+    yinit: initial conditions (th_1, w_1, th_2, w_2)
+    ts: integration times
+    m: the mass of each pendula
+    l: the length of each pendula
+    g: the local acceleration of gravity
+
+    Returns:
+    sol: the simulation's timeseries
+    sol[:, 0] = ths_1, sol[:, 1] = ws_1
+    sol[:, 2] = ths_2, sol[:, 3] = ws_2
+    """
+    ## Set the problem
+    f = lambda state, t : ddouble_pendulum(state, t, m, l, g)
+
+    ## Solve it
+    sol = odeint(f, yinit, ts, **kwargs)
+
+    return sol
+
+def dni_double_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, m=(1, 1), l=(1,1), g=9.8, h=1e-4):
+    """Returns the dynamical equation of a non-inertial double pendulum
 
     Parameters:
     state: the state (angle_1, angular speed_1, angle_2, angular_speed_2)
@@ -147,3 +221,30 @@ def ni_double_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, m=(1, 
 
     dydt = dydt.reshape(1,4).tolist()[0]
     return dydt
+
+def ni_double_pendulum(yinit, ts, pivot_x, pivot_y, is_acceleration=False, m=(1, 1), l=(1,1), g=9.8, h=1e-4, **kwargs):
+    """Returns the timeseries of a simulated non-inertial double pendulum
+
+    Parameters:
+    yinit: initial conditions (th_1, w_1, th_2, w_2)
+    ts: integration times
+    m: the mass of each pendula
+    l: the length of each pendula
+    g: the local acceleration of gravity
+    pivot_x: the horizontal position of the pivot
+    pivot_y: the vertical position of the pivot
+    is_acceleration: set to True to input pivot accelerations instead of positions
+    h: numerical step for computing numerical derivatives
+    
+    Returns:
+    sol: the simulation's timeseries
+    sol[:, 0] = ths_1, sol[:, 1] = ws_1
+    sol[:, 2] = ths_2, sol[:, 3] = ws_2
+    """
+    ## Set the problem
+    f = lambda state, t : dni_double_pendulum(state, t, pivot_x, pivot_y, is_acceleration, m, l, g, h)
+
+    ## Solve it
+    sol = odeint(f, yinit, ts, **kwargs)
+
+    return sol

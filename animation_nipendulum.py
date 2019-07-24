@@ -6,19 +6,20 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 ## Set-up your problem
-steps = 1000
-ts = np.linspace(-5, 10, steps) # Simulation time
-yinit = (0, 0) # Initial condition (th_0, w_0)
 g = 9.8 # Acceleration of gravity
 l = 1 # Pendulum length
+d = 1 # Damping
 
 pos_x = lambda t : np.arctan(5*t) # Pivot's position
 pos_y = lambda t : 0*t
 
-f = lambda state, t : ni_pendulum(state, t, pos_x, pos_y, is_acceleration = False, g = g, l = l, d = 1) # Dynamical equation as a function of (state, t)
+ts = np.linspace(-5, 10, 1000) # Simulation time
+yinit = (0, 0) # Initial condition (th_0, w_0)
+
+# f = lambda state, t : ni_pendulum(state, t, pos_x, pos_y, is_acceleration = False, g = g, l = l, d = 1) # Dynamical equation as a function of (state, t)
 
 ## Solve it
-sol = odeint(f, yinit, ts)
+sol = ni_pendulum(yinit, ts, pos_x, pos_y, g = g, l = l, d = d)
 
 ## Extract each coordinate
 x_pivot = pos_x(ts) # Pivot's positions
