@@ -8,11 +8,10 @@ l = 1 # length
 g = 9.8 # Gravity
 d = 0 # Damping
 
-ts = np.linspace(0, 10, 500) # Simulation time
+ts = np.linspace(0, 2, 500) # Simulation time
 yinit = (0, 1) # Initial condition (th_0, w_0)
 
 ainit = 0 # Initial acceleration
-
 dA = 0.01 # Delta of acceleration
 accel_y = lambda t : 0.0*t
 
@@ -27,10 +26,24 @@ def pendulum_energy(y, l, g):
 
     return T + V
 
+## Create data storages for the timeseries
+ths = np.ones(len(ts)-1)*np.nan # Angles
+ws = np.ones(len(ts)-1)*np.nan # Angular speeds
+acs = np.ones(len(ts)-1)*np.nan # Pivot's horizontal accelerations
+es = np.ones(len(ts)-1)*np.nan # Mechanical energies
+tss = np.ones(len(ts)-1)*np.nan # Times
+
 ## Solve it
 yprev = yinit
 aprev = ainit
-for i in range(0, len(ts)-2):
+for i in range(0, len(ts)-1):
+
+    ## Store the results from the previous iteration
+    acs[i] = aprev
+    ths[i] = yprev[0]
+    ws[i] = yprev[1]
+    tss[i] = ts[i]
+
     accel_x_up = lambda t : aprev + dA + 0.0*t
     accel_x_eq = lambda t : aprev + 0.0*t
     accel_x_do = lambda t : aprev - dA + 0.0*t
@@ -54,6 +67,7 @@ for i in range(0, len(ts)-2):
     n_hits = len(min_indices)
     chosen_index = min_indices[random.randint(0, n_hits-1)]
     chosen_energy = energies[chosen_index]
+    es[i] = chosen_energy
 
     ## Choose next action
     if chosen_index==0:
@@ -72,3 +86,17 @@ for i in range(0, len(ts)-2):
     aprev = anext
 
     print(f'Episode: {i}. Applied acceleration {anext:.2f}. Energy {chosen_energy:.2f}')
+
+## Plot results
+fig, axs = plt.subplots(1, 1)
+plt.plot(tss, ths, label = r'$\theta$')
+plt.plot(tss, ws, label = r'$\omega$')
+plt.plot(tss, es, label = r'$E$')
+plt.plot(tss, acs, label = r'$a_x$')
+
+axs.set_xlim((0, 1))
+axs.set_xlabel('Time')
+axs.set_ylim((-0.3, 1))
+
+plt.legend()
+plt.show()
