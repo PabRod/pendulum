@@ -62,6 +62,15 @@ def dni_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8
     dydt: the time derivative
 
     """
+    ## Coerce constants to functions of time
+    if not callable(pivot_x):
+        value = pivot_x
+        pivot_x = lambda t : value + 0.0*t
+
+    if not callable(pivot_y):
+        value = pivot_y
+        pivot_y = lambda t : value + 0.0*t
+
     if is_acceleration:
         accel_x = lambda t : pivot_x(t)
         accel_y = lambda t : pivot_y(t)
@@ -96,6 +105,7 @@ def ni_pendulum(yinit, ts, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8
     sol: the simulation's timeseries sol[:, 0] = ths, sol[:, 1] = ws
 
     """
+
     ## Set the problem
     f = lambda state, t : dni_pendulum(state, t, pivot_x, pivot_y, is_acceleration, l, g, d, h)
 

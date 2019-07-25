@@ -44,9 +44,9 @@ for i in range(0, len(ts)-1):
     ws[i] = yprev[1]
     tss[i] = ts[i]
 
-    accel_x_up = lambda t : aprev + dA + 0.0*t
-    accel_x_eq = lambda t : aprev + 0.0*t
-    accel_x_do = lambda t : aprev - dA + 0.0*t
+    accel_x_up = aprev + dA
+    accel_x_eq = aprev
+    accel_x_do = aprev - dA
 
     ## Update the states
     sol_up = ni_pendulum(yprev, ts[i:i+2], accel_x_up, accel_y, True, l=l, g=g, d=d)
