@@ -122,3 +122,17 @@ def test_ddouble_pendulum(input, exp_output):
 
     assert(df == pytest.approx(exp_output, tol)), \
         'pendulum is not behaving as expected'
+
+def test_ni_double_pendulum_no_acceleration():
+    '''TEsts the non-inertial double pendulum with no acceleration
+    '''
+    ts = np.linspace(0, 10, 1000) # Simulation time
+    yinit = (0, 0, 0, 0) # Initial condition (th_0, w_0, th_1, w_1)
+    forc_x = lambda t : 1.0*t # Uniform speed
+    forc_y = lambda t : 2.0*t
+
+    # The dynamics should be the same by virtue of Galileo's relativity principle
+    f_inertial = lambda state, t : ddouble_pendulum(state, t)
+    f_non_intertial = lambda state, t : dni_double_pendulum(state, t, forc_x, forc_y)
+
+    assert(f_inertial(yinit, 0.0) == f_non_intertial(yinit, 0.0))
