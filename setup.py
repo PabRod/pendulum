@@ -23,5 +23,5 @@ setup(
     install_requires=[
           'sdeint',
       ],
-    packages=find_packages(exclude=('tests', 'docs', 'vignettes', 'scripts'))
+    packages=find_packages(exclude=('tests', 'docs', 'vignettes', 'scripts', 'drafts'))
 )

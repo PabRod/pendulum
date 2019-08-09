@@ -4,19 +4,19 @@ from scipy.integrate import odeint
 def dpendulum(state, t=0, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, l=1.0, g=9.8, d=0.0, h=1e-4):
     """Returns the dynamical equation of a non inertial pendulum
 
-    Parameters:
-    state: the state (angle, angular speed)
-    t: the time
-    l: the pendulum's length
-    g: the local acceleration of gravity
-    d: the damping constant
-    pivot_x: the horizontal position of the pivot
-    pivot_y: the vertical position of the pivot
-    is_acceleration: set to True to input pivot accelerations instead of positions
-    h: numerical step for computing numerical derivatives
-
-    Returns:
-    dydt: the time derivative
+    :param state: the state (angle, angular speed)
+    :param t: the time
+    :param l: the pendulum's length
+    :param g: the local acceleration of gravity
+    :param d: the damping constant
+    :param pivot_x: the horizontal position of the pivot
+    :type pivot_x: function of time or constant
+    :param pivot_y: the vertical position of the pivot
+    :type pivot_y: function of time or constant
+    :param is_acceleration: set to True to input pivot accelerations instead of positions
+    :type is_acceleration: boolean
+    :param h: numerical step for computing numerical derivatives
+    :returns: the time derivative (dydt)
 
     """
 
@@ -33,20 +33,20 @@ def dpendulum(state, t=0, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, l=1.0
 def pendulum(yinit, ts, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, l=1.0, g=9.8, d=0.0, h=1e-4, **kwargs):
     """Returns the timeseries of a simulated non inertial pendulum
 
-    Parameters:
-    yinit: initial conditions (th, w)
-    ts: integration times
-    l: the pendulum's length
-    g: the local acceleration of gravity
-    d: the damping constant
-    pivot_x: the horizontal position of the pivot
-    pivot_y: the vertical position of the pivot
-    is_acceleration: set to True to input pivot accelerations instead of positions
-    h: numerical step for computing numerical derivatives
-    **kwargs: odeint keyword arguments
-
-    Returns:
-    sol: the simulation's timeseries sol[:, 0] = ths, sol[:, 1] = ws
+    :param yinit: initial conditions (th, w)
+    :param ts: integration times
+    :param l: the pendulum's length
+    :param g: the local acceleration of gravity
+    :param d: the damping constant
+    :param pivot_x: the horizontal position of the pivot
+    :type pivot_x: function of time or constant
+    :param pivot_y: the vertical position of the pivot
+    :type pivot_y: function of time or constant
+    :param is_acceleration: set to True to input pivot accelerations instead of positions
+    :type is_acceleration: boolean
+    :param h: numerical step for computing numerical derivatives
+    :param **kwargs: odeint keyword arguments
+    :returns: the simulation's timeseries (sol[:, 0] = ths, sol[:, 1] = ws)
 
     """
 
@@ -61,19 +61,19 @@ def pendulum(yinit, ts, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, l=1.0, 
 def ddouble_pendulum(state, t=0, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, m=(1, 1), l=(1,1), g=9.8, h=1e-4):
     """Returns the dynamical equation of a non-inertial double pendulum
 
-    Parameters:
-    state: the state (angle_1, angular speed_1, angle_2, angular_speed_2)
-    t: the time
-    m: the mass of each pendula
-    l: the length of each pendula
-    g: the local acceleration of gravity
-    pivot_x: the horizontal position of the pivot
-    pivot_y: the vertical position of the pivot
-    is_acceleration: set to True to input pivot accelerations instead of positions
-    h: numerical step for computing numerical derivatives
-
-    Returns:
-    dydt: the time derivative
+    :param state: the state (angle_1, angular speed_1, angle_2, angular_speed_2)
+    :param t: the time
+    :param m: the mass of each pendula
+    :param l: the length of each pendula
+    :param g: the local acceleration of gravity
+    :param pivot_x: the horizontal position of the pivot
+    :type pivot_x: function of time or constant
+    :param pivot_y: the vertical position of the pivot
+    :type pivot_y: function of time or constant
+    :param is_acceleration: set to True to input pivot accelerations instead of positions
+    :type is_acceleration: boolean
+    :param h: numerical step for computing numerical derivatives
+    :returns: the time derivative (dydt)
 
     """
 
@@ -111,21 +111,19 @@ def ddouble_pendulum(state, t=0, pivot_x=0.0, pivot_y=0.0, is_acceleration=False
 def double_pendulum(yinit, ts, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, m=(1, 1), l=(1,1), g=9.8, h=1e-4, **kwargs):
     """Returns the timeseries of a simulated non-inertial double pendulum
 
-    Parameters:
-    yinit: initial conditions (th_1, w_1, th_2, w_2)
-    ts: integration times
-    m: the mass of each pendula
-    l: the length of each pendula
-    g: the local acceleration of gravity
-    pivot_x: the horizontal position of the pivot
-    pivot_y: the vertical position of the pivot
-    is_acceleration: set to True to input pivot accelerations instead of positions
-    h: numerical step for computing numerical derivatives
-
-    Returns:
-    sol: the simulation's timeseries
-    sol[:, 0] = ths_1, sol[:, 1] = ws_1
-    sol[:, 2] = ths_2, sol[:, 3] = ws_2
+    :param yinit: initial conditions (th_1, w_1, th_2, w_2)
+    :param ts: integration times
+    :param m: the mass of each pendula
+    :param l: the length of each pendula
+    :param g: the local acceleration of gravity
+    :param pivot_x: the horizontal position of the pivot
+    :type pivot_x: function of time or constant
+    :param pivot_y: the vertical position of the pivot
+    :type pivot_y: function of time or constant
+    :param is_acceleration: set to True to input pivot accelerations instead of positions
+    :type is_acceleration: boolean
+    :param h: numerical step for computing numerical derivatives
+    :returns: sol: the simulation's timeseries (sol[:, 0] = ths_1, sol[:, 1] = ws_1, sol[:, 2] = ths_2, sol[:, 3] = ws_2)
     """
     ## Set the problem
     f = lambda state, t : ddouble_pendulum(state, t, pivot_x, pivot_y, is_acceleration, m, l, g, h)
@@ -142,15 +140,14 @@ def _format_accelerations(pivot_x, pivot_y, is_acceleration, h):
     If is_acceleration is set to True, these functions are interpreted as
     pivot's acceleration. Otherwise, they are interpreted as pivot's movement.
 
-    Parameters:
-    pivot_x: the horizontal position of the pivot
-    pivot_y: the vertical position of the pivot
-    is_acceleration: set to True to input pivot accelerations instead of positions
-    h: numerical step for computing numerical derivatives
-
-    Returns:
-    accel_x: the horizontal acceleration of the pivot, as a function of t
-    accel_y: the vertical acceleration of the pivot, as a function of t
+    :param pivot_x: the horizontal position of the pivot
+    :type pivot_x: function of time or constant
+    :param pivot_y: the vertical position of the pivot
+    :type pivot_y: function of time or constant
+    :param is_acceleration: set to True to input pivot accelerations instead of positions
+    :type is_acceleration: boolean
+    :param h: numerical step for computing numerical derivatives
+    :returns: accel_x and accel_y, the horizontal and vertical accelerations of the pivot, as a function of t
     """
     ## If the user introduces a constant, it should be interpreted as a function
     if not callable(pivot_x):
