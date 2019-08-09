@@ -65,7 +65,7 @@ def test_freefall_pendulum():
     yinit = (np.pi/2, 0) # Initial condition (th_0, w_0)
 
     ## Solve it
-    sol = ni_pendulum(yinit, ts, pos_x, pos_y, g = g)
+    sol = pendulum(yinit, ts, pos_x, pos_y, g = g)
 
     ## No relative movement is expected
     assert(sol[-1, 0] == pytest.approx(yinit[0], tol))
@@ -74,12 +74,12 @@ def test_freefall_pendulum():
     acc_x = lambda t: 0.0*t # Pivot's acceleration
     acc_y = lambda t: 0.0*t - g
 
-    sol_2 = ni_pendulum(yinit, ts, acc_x, acc_y, is_acceleration = True, g = g)
+    sol_2 = pendulum(yinit, ts, acc_x, acc_y, is_acceleration = True, g = g)
 
     ## No relative movement is expected
     assert(sol_2[-1, 0] == pytest.approx(yinit[0], tol))
 
-def test_dni_pendulum_no_acceleration():
+def test_noninertial_pendulum_no_acceleration():
     ''' Tests the non inertial pendulum with no acceleration
     '''
     ts = np.linspace(0, 10, 1000) # Simulation time
@@ -89,11 +89,11 @@ def test_dni_pendulum_no_acceleration():
 
     # The dynamics should be the same by virtue of Galileo's relativity
     f_inertial = lambda state, t : dpendulum(state, t)
-    f_non_intertial = lambda state, t : dni_pendulum(state, t, forc_x, forc_y)
+    f_non_intertial = lambda state, t : dpendulum(state, t, forc_x, forc_y)
 
     assert(f_inertial(yinit, 0.0) == f_non_intertial(yinit, 0.0))
 
-def test_dni_pendulum():
+def test_noninertial_pendulum():
     ''' Tests the non inertial pendulum with acceleration
     '''
     ts = np.linspace(0, 10, 1000) # Simulation time
@@ -103,7 +103,7 @@ def test_dni_pendulum():
 
     # The dynamics should be different
     f_inertial = lambda state, t : dpendulum(state, t)
-    f_non_intertial = lambda state, t : dni_pendulum(state, t, forc_x, forc_y)
+    f_non_intertial = lambda state, t : dpendulum(state, t, forc_x, forc_y)
 
     assert(f_inertial(yinit, 0.0) != f_non_intertial(yinit, 0.0))
 

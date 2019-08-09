@@ -1,50 +1,7 @@
 import numpy as np
 from scipy.integrate import odeint
 
-def dpendulum(state, t=0, l=1, g=9.8, d=0):
-    """Returns the dynamical equation of a simple pendulum
-
-    Parameters:
-    state: the state (angle, angular speed)
-    t: the time
-    l: the pendulum's length
-    g: the local acceleration of gravity
-    d: damping constant
-
-    Returns:
-    dydt: the time derivative
-
-    """
-    th, w = state
-    dydt = [w,
-            -g/l * np.sin(th) - d * w]
-
-    return dydt
-
-def pendulum(yinit, ts, l=1, g=9.8, d=0, **kwargs):
-    """ Returns the timeseries of a simulated pendulum
-
-    Parameters:
-    yinit: initial conditions (th, w)
-    ts: integration times
-    l: the pendulum's length
-    g: the local acceleration of gravity
-    d: damping constant
-    **kwargs: odeint keyword arguments
-
-    Returns:
-    sol: the simulation's timeseries sol[:, 0] = ths, sol[:, 1] = ws
-    """
-
-    ## Set the problem
-    f = lambda state, t : dpendulum(state, t, l, g, d)
-
-    ## Solve it
-    sol = odeint(f, yinit, ts, **kwargs)
-
-    return sol
-
-def dni_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8, d=0.0, h=1e-4):
+def dpendulum(state, t=0, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, l=1.0, g=9.8, d=0.0, h=1e-4):
     """Returns the dynamical equation of a non inertial pendulum
 
     Parameters:
@@ -73,7 +30,7 @@ def dni_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8
 
     return dydt
 
-def ni_pendulum(yinit, ts, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8, d=0.0, h=1e-4, **kwargs):
+def pendulum(yinit, ts, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, l=1.0, g=9.8, d=0.0, h=1e-4, **kwargs):
     """Returns the timeseries of a simulated non inertial pendulum
 
     Parameters:
@@ -94,7 +51,7 @@ def ni_pendulum(yinit, ts, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8
     """
 
     ## Set the problem
-    f = lambda state, t : dni_pendulum(state, t, pivot_x, pivot_y, is_acceleration, l, g, d, h)
+    f = lambda state, t : dpendulum(state, t, pivot_x, pivot_y, is_acceleration, l, g, d, h)
 
     ## Solve it
     sol = odeint(f, yinit, ts, **kwargs)

@@ -49,9 +49,9 @@ for i in range(0, len(ts)-1):
     accel_x_do = aprev - np.abs(np.random.normal(loc=0.0, scale=dA))
 
     ## Update the states
-    sol_up = ni_pendulum(yprev, ts[i:i+2], accel_x_up, accel_y, True, l=l, g=g, d=d)
-    sol_eq = ni_pendulum(yprev, ts[i:i+2], accel_x_eq, accel_y, True, l=l, g=g, d=d)
-    sol_do = ni_pendulum(yprev, ts[i:i+2], accel_x_do, accel_y, True, l=l, g=g, d=d)
+    sol_up = pendulum(yprev, ts[i:i+2], accel_x_up, accel_y, True, l=l, g=g, d=d)
+    sol_eq = pendulum(yprev, ts[i:i+2], accel_x_eq, accel_y, True, l=l, g=g, d=d)
+    sol_do = pendulum(yprev, ts[i:i+2], accel_x_do, accel_y, True, l=l, g=g, d=d)
 
     ynext_up = sol_up[:,-1]
     ynext_eq = sol_eq[:,-1]
