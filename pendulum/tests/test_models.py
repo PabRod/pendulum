@@ -136,3 +136,31 @@ def test_ni_double_pendulum_no_acceleration():
     f_non_intertial = lambda state, t : ddouble_pendulum(state, t, forc_x, forc_y)
 
     assert(f_inertial(yinit, 0.0) == f_non_intertial(yinit, 0.0))
+
+def test_freefall_double_pendulum():
+    ''' Check the solution for a free-falling non-inertial pendulum
+    '''
+    tol = 1e-4
+
+    ## Set-up your problem
+    g = 9.8 # Acceleration of gravity
+    pos_x = lambda t : 0.0*t # Pivot's position
+    pos_y = lambda t : -g/2*t**2 # Free falling
+
+    ts = np.linspace(0, 10, 1000) # Simulation time
+    yinit = (np.pi/2, 0, np.pi/2, 0) # Initial condition (th_0, w_0)
+
+    ## Solve it
+    sol = double_pendulum(yinit, ts, pos_x, pos_y, g = g)
+
+    ## No relative movement is expected
+    assert(sol[-1, 0] == pytest.approx(yinit[0], tol))
+
+    # Repeat test in acceleration mode
+    acc_x = lambda t: 0.0*t # Pivot's acceleration
+    acc_y = lambda t: 0.0*t - g
+
+    sol_2 = double_pendulum(yinit, ts, acc_x, acc_y, is_acceleration = True, g = g)
+
+    ## No relative movement is expected
+    assert(sol_2[-1, 0] == pytest.approx(yinit[0], tol))
