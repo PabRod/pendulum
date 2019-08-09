@@ -14,7 +14,7 @@ with open('LICENSE') as f:
 setup(
     name='pendulum',
     version='0.1.0',
-    description='Toy package',
+    description='Mechanical simulation of non-inertial simple and double pendula',
     long_description=readme,
     author='Pablo Rodríguez-Sánchez',
     author_email='pablo.rodriguez.sanchez@gmail.com',
