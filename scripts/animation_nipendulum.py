@@ -13,9 +13,6 @@ pos_y = lambda t : 0*t
 
 ts = np.linspace(-5, 10, 1000) # Simulation time
 yinit = (0, 0) # Initial condition (th_0, w_0)
-
-# f = lambda state, t : ni_pendulum(state, t, pos_x, pos_y, is_acceleration = False, g = g, l = l, d = 1) # Dynamical equation as a function of (state, t)
-
 ## Solve it
 sol = pendulum(yinit, ts, pos_x, pos_y, g = g, l = l, d = d)
 

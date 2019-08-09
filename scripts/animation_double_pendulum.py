@@ -6,10 +6,11 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 ## Set-up your problem
-m = (2, 1)
-l = (1, 1)
+m = (2, 1) # Masses
+l = (1, 1) # Lengths
 
-pos_x = lambda t : -2 + np.arctan(3*t - 3*1) - np.arctan(3*t - 3*7) # Pivot's position
+## Pivot's position
+pos_x = lambda t : -2 + np.arctan(3*t - 3*1) - np.arctan(3*t - 3*7)
 pos_y = lambda t : 0.0*t
 
 ts = np.linspace(0, 10, 1000) # Simulation time
