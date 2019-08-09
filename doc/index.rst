@@ -6,18 +6,22 @@
 Welcome to pendulum's documentation!
 ====================================
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
 Simple pendulum
-================
+====================================
 .. autofunction:: pendulum.models.dpendulum
 
 .. autofunction:: pendulum.models.pendulum
 
 Double pendulum
-================
+====================================
 .. autofunction:: pendulum.models.ddouble_pendulum
 
 .. autofunction:: pendulum.models.double_pendulum
 
 Auxiliary functions
-================
+====================================
 .. autofunction:: pendulum.models._format_accelerations

@@ -45,7 +45,7 @@ def pendulum(yinit, ts, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, l=1.0, 
     :param is_acceleration: set to True to input pivot accelerations instead of positions
     :type is_acceleration: boolean
     :param h: numerical step for computing numerical derivatives
-    :param **kwargs: odeint keyword arguments
+    :param ``**kwargs``: odeint keyword arguments
     :returns: the simulation's timeseries (sol[:, 0] = ths, sol[:, 1] = ws)
 
     """
@@ -123,6 +123,7 @@ def double_pendulum(yinit, ts, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, 
     :param is_acceleration: set to True to input pivot accelerations instead of positions
     :type is_acceleration: boolean
     :param h: numerical step for computing numerical derivatives
+    :param ``**kwargs``: odeint keyword arguments
     :returns: sol: the simulation's timeseries (sol[:, 0] = ths_1, sol[:, 1] = ws_1, sol[:, 2] = ths_2, sol[:, 3] = ws_2)
     """
     ## Set the problem
