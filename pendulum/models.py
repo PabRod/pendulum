@@ -89,14 +89,14 @@ def ddouble_pendulum(state, t=0, pivot_x=0.0, pivot_y=0.0, is_acceleration=False
     b = lambda th1, th2 : -m2*l1*l2*np.cos(th1 - th2) / det(th1, th2)
     d = lambda th1, th2 : M*l1**2 / det(th1, th2)
 
-    mat = lambda th1, th2 : np.matrix(
+    mat = lambda th1, th2 : np.array(
                             [[1, 0,           0, 0],
                              [0, a(th1, th2), 0, b(th1, th2)],
                              [0, 0,           1, 0],
                              [0, b(th1, th2), 0, d(th1, th2)]]
                              )
 
-    F = lambda th1, w1, th2, w2, t: np.matrix([[w1],
+    F = lambda th1, w1, th2, w2, t: np.array([[w1],
                                              [-m2*l1*l2*np.sin(th1-th2)*w2**2 - M*g*l1*np.sin(th1) - M*l1*(accel_x(t)*np.cos(th1) + accel_y(t)*np.sin(th1))],
                                              [w2],
                                              [m2*l1*l2*np.sin(th1-th2)*w1**2 - m2*g*l2*np.sin(th2) -m2*l2*(accel_x(t)*np.cos(th2) + accel_y(t)*np.sin(th2))]])
