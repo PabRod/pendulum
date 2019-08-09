@@ -133,6 +133,6 @@ def test_ni_double_pendulum_no_acceleration():
 
     # The dynamics should be the same by virtue of Galileo's relativity principle
     f_inertial = lambda state, t : ddouble_pendulum(state, t)
-    f_non_intertial = lambda state, t : dni_double_pendulum(state, t, forc_x, forc_y)
+    f_non_intertial = lambda state, t : ddouble_pendulum(state, t, forc_x, forc_y)
 
     assert(f_inertial(yinit, 0.0) == f_non_intertial(yinit, 0.0))

@@ -16,7 +16,7 @@ ts = np.linspace(0, 10, 1000) # Simulation time
 yinit = (0, 0, 0, 0) # Initial condition (th_1, w_1, th_2, w_2)
 
 ## Solve it
-sol = ni_double_pendulum(yinit, ts, pos_x, pos_y, m=m, l=l)
+sol = double_pendulum(yinit, ts, pos_x, pos_y, m=m, l=l)
 
 ## Extract each coordinate
 x_0 = pos_x(ts) # Pivot's positions
