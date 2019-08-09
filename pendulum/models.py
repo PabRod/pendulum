@@ -62,24 +62,11 @@ def dni_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, l=1.0, g=9.8
     dydt: the time derivative
 
     """
-    ## Coerce constants to functions of time
-    if not callable(pivot_x):
-        value = pivot_x
-        pivot_x = lambda t : value + 0.0*t
 
-    if not callable(pivot_y):
-        value = pivot_y
-        pivot_y = lambda t : value + 0.0*t
+    ## Flexible input interpretation
+    accel_x, accel_y = _format_accelerations(pivot_x, pivot_y, is_acceleration, h)
 
-    if is_acceleration:
-        accel_x = lambda t : pivot_x(t)
-        accel_y = lambda t : pivot_y(t)
-    else: # Compute the acceleration numerically
-        speed_x = lambda t : (pivot_x(t + h) - pivot_x(t))/h
-        speed_y = lambda t : (pivot_y(t + h) - pivot_y(t))/h
-        accel_x = lambda t : (speed_x(t + h) - speed_x(t))/h
-        accel_y = lambda t : (speed_y(t + h) - speed_y(t))/h
-
+    ## Dynamical equation
     th, w = state
     dydt = [w,
             -g/l * np.sin(th)  - d * w - accel_x(t) * np.cos(th) / l  - accel_y(t) * np.sin(th) / l]
@@ -196,14 +183,9 @@ def dni_double_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, m=(1,
     dydt: the time derivative
 
     """
-    if is_acceleration:
-        accel_x = lambda t : pivot_x(t)
-        accel_y = lambda t : pivot_y(t)
-    else: # Compute the acceleration numerically
-        speed_x = lambda t : (pivot_x(t + h) - pivot_x(t))/h
-        speed_y = lambda t : (pivot_y(t + h) - pivot_y(t))/h
-        accel_x = lambda t : (speed_x(t + h) - speed_x(t))/h
-        accel_y = lambda t : (speed_y(t + h) - speed_y(t))/h
+
+    ## Flexible input interpretation
+    accel_x, accel_y = _format_accelerations(pivot_x, pivot_y, is_acceleration, h)
 
     ## Define some auxiliary variables
     M = np.sum(m)
@@ -226,6 +208,7 @@ def dni_double_pendulum(state, t, pivot_x, pivot_y, is_acceleration=False, m=(1,
                                              [w2],
                                              [m2*l1*l2*np.sin(th1-th2)*w1**2 - m2*g*l2*np.sin(th2) -m2*l2*(accel_x(t)*np.cos(th2) + accel_y(t)*np.sin(th2))]])
 
+    ## Dynamical equations
     th1, w1, th2, w2 = state
     dydt = np.dot(mat(th1, th2), F(th1, w1, th2, w2, t))
 
@@ -245,7 +228,7 @@ def ni_double_pendulum(yinit, ts, pivot_x, pivot_y, is_acceleration=False, m=(1,
     pivot_y: the vertical position of the pivot
     is_acceleration: set to True to input pivot accelerations instead of positions
     h: numerical step for computing numerical derivatives
-    
+
     Returns:
     sol: the simulation's timeseries
     sol[:, 0] = ths_1, sol[:, 1] = ws_1
@@ -258,3 +241,42 @@ def ni_double_pendulum(yinit, ts, pivot_x, pivot_y, is_acceleration=False, m=(1,
     sol = odeint(f, yinit, ts, **kwargs)
 
     return sol
+
+def _format_accelerations(pivot_x, pivot_y, is_acceleration, h):
+    """ Returns the pivot movement as acceleration
+
+    The user is allowed to enter the pivot's movement as two functions of time.
+    If is_acceleration is set to True, these functions are interpreted as
+    pivot's acceleration. Otherwise, they are interpreted as pivot's movement.
+
+    Parameters:
+    pivot_x: the horizontal position of the pivot
+    pivot_y: the vertical position of the pivot
+    is_acceleration: set to True to input pivot accelerations instead of positions
+    h: numerical step for computing numerical derivatives
+
+    Returns:
+    accel_x: the horizontal acceleration of the pivot, as a function of t
+    accel_y: the vertical acceleration of the pivot, as a function of t
+    """
+    ## If the user introduces a constant, it should be interpreted as a function
+    if not callable(pivot_x):
+        value = pivot_x
+        pivot_x = lambda t : value + 0.0*t
+
+    if not callable(pivot_y):
+        value = pivot_y
+        pivot_y = lambda t : value + 0.0*t
+
+    #
+    if is_acceleration: # Just assign it
+        accel_x = lambda t : pivot_x(t)
+        accel_y = lambda t : pivot_y(t)
+    else: # Compute the acceleration numerically
+        speed_x = lambda t : (pivot_x(t + h) - pivot_x(t))/h
+        speed_y = lambda t : (pivot_y(t + h) - pivot_y(t))/h
+        accel_x = lambda t : (speed_x(t + h) - speed_x(t))/h
+        accel_y = lambda t : (speed_y(t + h) - speed_y(t))/h
+        #TODO: use a less artisanal method
+
+    return accel_x, accel_y
