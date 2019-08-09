@@ -67,7 +67,7 @@ plt.show()
 
 For more advanced examples, see:
 
-- [Simple pendulum](example_script.py)
-- [Double pendulum](example_double_pendulum.py)
-- [Non-inertial simple pendulum (animated)](animation_nipendulum.py)
-- [Non-inertial double pendulum (animated)](animation_double_pendulum.py)
+- [Simple pendulum](scripts/example_script.py)
+- [Double pendulum](scripts/example_double_pendulum.py)
+- [Non-inertial simple pendulum (animated)](scripts/animation_nipendulum.py)
+- [Non-inertial double pendulum (animated)](scripts/animation_double_pendulum.py)
