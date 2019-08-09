@@ -13,6 +13,19 @@ yinit = (0, 1) # Initial condition (th_0, w_0)
 ## Solve it
 sol = pendulum(yinit, ts, l, g, d)
 
+def pendulum_energy(y, l, g):
+    """ Returns the energy of a simple (inertial) pendulum
+    """
+
+    (th, w) = y
+
+    T = 0.5*(l*w)**2 # Kinetic
+    V = - g*l*np.cos(th) # Potential
+
+    return T + V
+
+print(pendulum_energy(sol[100,:], l, g))
+
 ## Plot results
 fig, axs = plt.subplots(1, 1)
 plt.plot(ts, sol[:,0], label = r'$\theta$')

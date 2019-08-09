@@ -9,7 +9,7 @@ import matplotlib.animation as animation
 m = (2, 1)
 l = (1, 1)
 
-pos_x = lambda t : -2 + np.arctan(3*t - 3*1) - np.arctan(3*t - 3*7)# Pivot's position
+pos_x = lambda t : -2 + np.arctan(3*t - 3*1) - np.arctan(3*t - 3*7) # Pivot's position
 pos_y = lambda t : 0.0*t
 
 ts = np.linspace(0, 10, 1000) # Simulation time

@@ -124,7 +124,7 @@ def test_ddouble_pendulum(input, exp_output):
         'pendulum is not behaving as expected'
 
 def test_ni_double_pendulum_no_acceleration():
-    '''TEsts the non-inertial double pendulum with no acceleration
+    '''Tests the non-inertial double pendulum with no acceleration
     '''
     ts = np.linspace(0, 10, 1000) # Simulation time
     yinit = (0, 0, 0, 0) # Initial condition (th_0, w_0, th_1, w_1)
