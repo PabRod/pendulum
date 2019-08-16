@@ -7,7 +7,6 @@ output: html_document
 
 
 ```{r setup, echo = FALSE, include = FALSE}
-animate <- FALSE
 knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE,
                       warning = FALSE)
@@ -117,7 +116,7 @@ plt.show()
 ```
 
 ```{r animate, fig.align = 'center'}
-if(knitr::opts_knit$get("rmarkdown.pandoc.to") == "html" & animate) {
+if(knitr::opts_knit$get("rmarkdown.pandoc.to") == "html") {
   # Include animated gif
   knitr::include_graphics('../figs/displacement.gif') 
 } else {
@@ -201,7 +200,7 @@ plt.show()
 ```
 
 ```{r 2animate, fig.align = 'center'}
-if(knitr::opts_knit$get("rmarkdown.pandoc.to") == "html" & animate) {
+if(knitr::opts_knit$get("rmarkdown.pandoc.to") == "html") {
   # Include animated gif
   knitr::include_graphics('../figs/nidouble2.gif') 
 } else {

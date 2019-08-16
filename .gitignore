@@ -19,5 +19,6 @@
 *.mat
 *.m
 *.mp4
+*.html
 doc/_build/
 .Rproj.user
