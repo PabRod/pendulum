@@ -40,9 +40,9 @@ pytest
 # Getting started
 
 ## Tutorial
-Take a look at [our tutorial]('vignettes/tutorial.html').
+Take a look at [our tutorial](vignettes/tutorial.html).
 
-Printer friendly version available [here]('vignettes/tutorial.pdf')
+Printer friendly version available [here](vignettes/tutorial.pdf)
 
 ## Minimal example
 
