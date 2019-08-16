@@ -8,15 +8,18 @@ g = 9.8 # Acceleration of gravity
 l = 1 # Pendulum length
 d = 1 # Damping
 
-pos_x = lambda t : np.arctan(5*t) # Pivot's position
+# Pivot's position
+## The pivot is moving, so its position is a function of time
+pos_x = lambda t : np.arctan(5*t)
 pos_y = lambda t : 0*t
 
 ts = np.linspace(-5, 10, 1000) # Simulation time
 yinit = (0, 0) # Initial condition (th_0, w_0)
+
 ## Solve it
 sol = pendulum(yinit, ts, pos_x, pos_y, g = g, l = l, d = d)
 
-## Extract each coordinate
+## Transform to cartesian coordinates
 x_pivot = pos_x(ts) # Pivot's positions
 y_pivot = pos_y(ts)
 x = x_pivot + l*np.sin(sol[:, 0]) # Bob's positions

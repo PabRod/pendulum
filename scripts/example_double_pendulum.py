@@ -3,8 +3,8 @@ from pendulum.models import *
 import matplotlib.pyplot as plt
 
 ## Set-up your problem
-ts = np.linspace(0, 100, 10000) # Simulation time
-yinit = (0, -1, 0, 1) # Initial condition (th_1, w_1, th_2, w_2)
+ts = np.linspace(0, 10, 10000) # Simulation time
+yinit = (0.5, -1, 0, 1) # Initial condition (th_1, w_1, th_2, w_2)
 
 # For using non-default parameters, use
 #
@@ -21,6 +21,9 @@ show = [True, False, True, False]
 for i in range(0, 4):
     if show[i]:
         plt.plot(ts, sol[:, i], label = labels[i])
+
+plt.xlabel('time')
+plt.ylabel('states')
 
 plt.legend()
 plt.show()

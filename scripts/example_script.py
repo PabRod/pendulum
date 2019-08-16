@@ -18,5 +18,8 @@ fig, axs = plt.subplots(1, 1)
 plt.plot(ts, sol[:,0], label = r'$\theta$')
 plt.plot(ts, sol[:,1], label = r'$\omega$')
 
+plt.xlabel('time')
+plt.ylabel('states')
+
 plt.legend()
 plt.show()

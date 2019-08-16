@@ -9,7 +9,8 @@ import matplotlib.animation as animation
 m = (2, 1) # Masses
 l = (1, 1) # Lengths
 
-## Pivot's position
+# Pivot's position
+## The pivot is moving, so its position is a function of time
 pos_x = lambda t : -2 + np.arctan(3*t - 3*1) - np.arctan(3*t - 3*7)
 pos_y = lambda t : 0.0*t
 
@@ -19,7 +20,7 @@ yinit = (0, 0, 0, 0) # Initial condition (th_1, w_1, th_2, w_2)
 ## Solve it
 sol = double_pendulum(yinit, ts, pos_x, pos_y, m=m, l=l)
 
-## Extract each coordinate
+## Transform to cartesian coordinates
 x_0 = pos_x(ts) # Pivot's positions
 y_0 = pos_y(ts)
 x_1 = x_0 + l[0]*np.sin(sol[:, 0]) # Bob's positions
@@ -62,7 +63,7 @@ ani = animation.FuncAnimation(fig, animate, np.arange(1, len(ts)),
 
 
 ## Uncomment for saving
-Writer = animation.writers['ffmpeg']
+#Writer = animation.writers['ffmpeg']
 # writer = Writer(fps=100, metadata=dict(artist='Me'), bitrate=1800)
 # ani.save('im.mp4', writer = writer)
 

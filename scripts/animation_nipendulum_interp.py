@@ -10,10 +10,6 @@ g = 9.8 # Acceleration of gravity
 l = 1 # Pendulum length
 d = 1 # Damping
 
-# tsm = np.linspace(-6, 11, 100)
-# xsm = np.arctan(5*tsm)
-# ysm = 0*tsm
-
 ## Load data
 data = pd.read_csv('./scripts/data.csv')
 
@@ -22,15 +18,17 @@ data = data[['t', 'x', 'y']] # Drop unneccessary info
 data = data.sort_values(by=['t'])
 data = data.dropna() # Remove artifacts
 
-pos_x = interp1d(data.t, data.x, kind = 'cubic') # Pivot's position
+# Pivot's positions functions can be built interpolating the data
+pos_x = interp1d(data.t, data.x, kind = 'cubic')
 pos_y = interp1d(data.t, data.y, kind = 'cubic')
 
 ts = np.linspace(-5, 10, 1000) # Simulation time
 yinit = (0, 0) # Initial condition (th_0, w_0)
+
 ## Solve it
 sol = pendulum(yinit, ts, pos_x, pos_y, g = g, l = l, d = d)
 
-## Extract each coordinate
+## Transform to cartesian coordinates
 x_pivot = pos_x(ts) # Pivot's positions
 y_pivot = pos_y(ts)
 x = x_pivot + l*np.sin(sol[:, 0]) # Bob's positions
