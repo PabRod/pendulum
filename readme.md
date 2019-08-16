@@ -115,4 +115,4 @@ For more advanced examples, see
 - [Double pendulum](scripts/example_double_pendulum.py)
 - [Non-inertial simple pendulum (animated)](scripts/animation_nipendulum.py)
 - [Non-inertial double pendulum (animated)](scripts/animation_double_pendulum.py)
-- [Reading pivot's position from data](script/animation_nipendulum_interp.py)
+- [Reading pivot's position from data](scripts/animation_nipendulum_interp.py)
