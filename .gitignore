@@ -15,10 +15,10 @@
 /build
 /dist
 /animation
-/vignettes
 *Rproj*
 
 *.mat
 *.m
 *.mp4
 doc/_build/
+.Rproj.user

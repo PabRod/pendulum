@@ -11,10 +11,10 @@ l = (1, 1) # Lengths
 
 # Pivot's position
 ## The pivot is moving, so its position is a function of time
-pos_x = lambda t : -2 + np.arctan(3*t - 3*1) - np.arctan(3*t - 3*7)
+pos_x = lambda t : np.arctan(3*t) #-2 + np.arctan(3*(t - 1)) - np.arctan(3*(t - 7))
 pos_y = lambda t : 0.0*t
 
-ts = np.linspace(0, 10, 1000) # Simulation time
+ts = np.linspace(-3, 8, 1000) # Simulation time
 yinit = (0, 0, 0, 0) # Initial condition (th_1, w_1, th_2, w_2)
 
 ## Solve it
@@ -63,8 +63,8 @@ ani = animation.FuncAnimation(fig, animate, np.arange(1, len(ts)),
 
 
 ## Uncomment for saving
-#Writer = animation.writers['ffmpeg']
-# writer = Writer(fps=100, metadata=dict(artist='Me'), bitrate=1800)
-# ani.save('im.mp4', writer = writer)
+Writer = animation.writers['ffmpeg']
+writer = Writer(fps=100, metadata=dict(artist='Me'), bitrate=1800)
+ani.save('im.mp4', writer = writer)
 
 plt.show()
