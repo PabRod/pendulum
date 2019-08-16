@@ -10,7 +10,6 @@
 
 *.RData
 *.Rhistory
-*.html
 
 /build
 /dist
