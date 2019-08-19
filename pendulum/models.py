@@ -175,16 +175,25 @@ def _format_accelerations(pivot_x, pivot_y, is_acceleration, h):
     :returns: accel_x and accel_y, the horizontal and vertical accelerations of the pivot, as a function of t
     """
 
-    ## If the user introduces a constant, it should be interpreted as a function
-    if not callable(pivot_x):
-        value = pivot_x
-        pivot_x = lambda t : value + 0.0*t
+    ## Input interpretation
+    if callable(pivot_x): # If the user inputs a function
+        pass # Do nothing
+    elif isinstance(pivot_x, float) or isinstance(pivot_x, int):
+        # If the user introduces a constant, it should be interpreted as a function
+        value_x = pivot_x
+        pivot_x = lambda t : value_x + 0.0*t
+    else:
+        raise ValueError('Wrong horizontal pivot position. Use x = constant or x(t) = function of t')
 
-    if not callable(pivot_y):
-        value = pivot_y
-        pivot_y = lambda t : value + 0.0*t
+    if callable(pivot_y): # If the user inputs a function
+        pass # Do nothing
+    elif isinstance(pivot_y, float) or isinstance(pivot_y, int):
+        # If the user introduces a constant, it should be interpreted as a function
+        value_y = pivot_y
+        pivot_y = lambda t : value_y + 0.0*t
+    else:
+        raise ValueError('Wrong vertical pivot position. Use y = constant or y(t) = function of t')
 
-    #
     if is_acceleration: # Just assign it
         accel_x = lambda t : pivot_x(t)
         accel_y = lambda t : pivot_y(t)
