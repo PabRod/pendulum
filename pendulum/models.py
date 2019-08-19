@@ -50,6 +50,19 @@ def pendulum(yinit, ts, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, l=1.0, 
 
     """
 
+    ## Avoid wrong inputs
+    if (l <= 0.0): # Negative or zero lengths don't make sense
+        raise ValueError('Wrong pendulum length (l). Expected positive float')
+
+    if (d < 0.0): # A negative damping constant doesn't make sense
+        raise ValueError('Wrong damping constant (d). Expected zero or positive float')
+
+    if (len(yinit) != 2): # The initial conditions are (th_0, w_0). No more, and no less
+        raise ValueError('Wrong initial condition (yinit). Expected 2-elements vector')
+
+    if (h <= 0.0): # The numerical step for differentiation has to be positive
+        raise ValueError('Wrong numerical step (h). Expected a positive float')
+
     ## Set the problem
     f = lambda state, t : dpendulum(state, t, pivot_x, pivot_y, is_acceleration, l, g, d, h)
 
@@ -126,6 +139,17 @@ def double_pendulum(yinit, ts, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, 
     :param ``**kwargs``: odeint keyword arguments
     :returns: sol: the simulation's timeseries (sol[:, 0] = ths_1, sol[:, 1] = ws_1, sol[:, 2] = ths_2, sol[:, 3] = ws_2)
     """
+
+    ## Avoid wrong inputs
+    if (np.min(m) <= 0.0) or (len(m) != 2): # Negative or zero masses don't make sense
+        raise ValueError('Wrong pendulum masses (m). Expected 2 positive floats')
+
+    if (np.min(l) <= 0.0) or (len(l) != 2): # Negative or zero lengths don't make sense
+        raise ValueError('Wrong pendulum lengths (l). Expected 2 positive floats')
+
+    if (len(yinit) != 4): # The initial conditions are (th_0, w_0, th_1, w_!). No more, and no less
+        raise ValueError('Wrong initial condition (yinit). Expected 4-elements vector')
+
     ## Set the problem
     f = lambda state, t : ddouble_pendulum(state, t, pivot_x, pivot_y, is_acceleration, m, l, g, h)
 
@@ -150,6 +174,7 @@ def _format_accelerations(pivot_x, pivot_y, is_acceleration, h):
     :param h: numerical step for computing numerical derivatives
     :returns: accel_x and accel_y, the horizontal and vertical accelerations of the pivot, as a function of t
     """
+
     ## If the user introduces a constant, it should be interpreted as a function
     if not callable(pivot_x):
         value = pivot_x

@@ -164,3 +164,87 @@ def test_freefall_double_pendulum():
 
     ## No relative movement is expected
     assert(sol_2[-1, 0] == pytest.approx(yinit[0], tol))
+
+@pytest.mark.xfail(raises=ValueError)
+def test_pendulum_wrong_length():
+    ''' Test wrong input (length)
+    '''
+    ## Set the pendulum
+    yinit = (0, 1)
+    l = -1 # Wrong, negative length
+    ts = np.linspace(0, 100, 100)
+
+    ## This should raise an exception
+    sol = pendulum(yinit, ts, l = l)
+
+@pytest.mark.xfail(raises=ValueError)
+def test_pendulum_wrong_damping():
+    ''' Test wrong input (damping)
+    '''
+    ## Set the pendulum
+    yinit = (0, 1)
+    d = -1 # Wrong, negative damping
+    ts = np.linspace(0, 100, 100)
+
+    ## This should raise an exception
+    sol = pendulum(yinit, ts, d = d)
+
+@pytest.mark.xfail(raises=ValueError)
+def test_pendulum_wrong_yinit():
+    ''' Test wrong input (initial conditions)
+    '''
+    ## Set the pendulum
+    yinit = (0, 1, 2) # Wrong, non 2D initial condition
+    ts = np.linspace(0, 100, 100)
+
+    ## This should raise an exception
+    sol = pendulum(yinit, ts)
+
+@pytest.mark.xfail(raises=ValueError)
+def test_pendulum_wrong_h():
+    ''' Test wrong input (step)
+    '''
+    ## Set the pendulum
+    yinit = (0, 1)
+    h = 0.0 # Wrong, non-positive step
+    ts = np.linspace(0, 100, 100)
+
+    ## This should raise an exception
+    sol = pendulum(yinit, ts, h = h)
+
+@pytest.mark.xfail(raises=ValueError)
+def test_double_pendulum_wrong_l():
+    ''' Test wrong input (lengths)
+    '''
+    ## Set-up your problem
+    ts = np.linspace(0, 10, 1000) # Simulation time
+    yinit = (np.pi/2, 0, np.pi/2, 0) # Initial condition
+
+    l = (1, 2, 3)
+
+    ## Solve it
+    sol = double_pendulum(yinit, ts, l = l)
+
+@pytest.mark.xfail(raises=ValueError)
+def test_double_pendulum_wrong_m():
+    ''' Test wrong input (masses)
+    '''
+    ## Set-up your problem
+    ts = np.linspace(0, 10, 1000) # Simulation time
+    yinit = (np.pi/2, 0, np.pi/2, 0) # Initial condition
+
+    m = (-2, 2)
+
+    ## Solve it
+    sol = double_pendulum(yinit, ts, m = m)
+
+@pytest.mark.xfail(raises=ValueError)
+def test_double_pendulum_wrong_yinit():
+    ''' Test wrong input (initial condition)
+    '''
+    ## Set-up your problem
+    ts = np.linspace(0, 10, 1000) # Simulation time
+    yinit = (np.pi/2, 0, np.pi/2) # Wrong, non-4D initial condition
+
+    ## Solve it
+    sol = double_pendulum(yinit, ts)

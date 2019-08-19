@@ -63,8 +63,8 @@ ani = animation.FuncAnimation(fig, animate, np.arange(1, len(ts)),
 
 
 ## Uncomment for saving
-Writer = animation.writers['ffmpeg']
-writer = Writer(fps=100, metadata=dict(artist='Me'), bitrate=1800)
-ani.save('im.mp4', writer = writer)
+# Writer = animation.writers['ffmpeg']
+# writer = Writer(fps=100, metadata=dict(artist='Me'), bitrate=1800)
+# ani.save('im.mp4', writer = writer)
 
 plt.show()
