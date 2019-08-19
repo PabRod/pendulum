@@ -130,40 +130,25 @@ def test_double_pendulum_wrong_yinit():
     sol = double_pendulum(yinit, ts)
 
 @pytest.mark.xfail(raises=ValueError)
-def test_pendulum_wrong_xaccel():
-    ''' Test wrong input (horizontal acceleration)
-    '''
-    ## Set-up your problem
-    ts = np.linspace(0, 10, 1000) # Simulation time
-    yinit = (np.pi/2, 0, np.pi/2) # Wrong, non-4D initial condition
-
-    # Accelerations
-    acc_x = (0, 0) # Wrong acceleration
-    acc_y = lambda t: t
-
-    sol = double_pendulum(yinit, ts, acc_x, acc_y)
-
-@pytest.mark.xfail(raises=ValueError)
-def test_pendulum_wrong_yaccel():
-    ''' Test wrong input (vertical acceleration)
-    '''
-    ## Set-up your problem
-    ts = np.linspace(0, 10, 1000) # Simulation time
-    yinit = (np.pi/2, 0, np.pi/2) # Wrong, non-4D initial condition
-
-    # Accelerations
-    acc_x = lambda t: 0.1 # Wrong acceleration
-    acc_y = lambda t: (t, t)
-
-    sol = double_pendulum(yinit, ts, acc_x, acc_y)
-
-@pytest.mark.xfail(raises=ValueError)
-def test_format_acceleration_errors():
+def test_format_acceleration_x_error():
     ''' Tests the exceptions for pivot's movement and accelerations
     '''
     tol = 1e-5
     h = 1e-4
 
-    wrong_accel = (1, 2) # Wrong acceleration, too many dimensions
+    wrong_accel_x = (1, 2) # Wrong acceleration, too many dimensions
+    accel_y = 0.0
 
-    accel_x, accel_y = _format_accelerations(wrong_accel, wrong_accel, is_acceleration=True, h=h)
+    accel_x, accel_y = _format_accelerations(wrong_accel_x, accel_y, is_acceleration=True, h=h)
+
+@pytest.mark.xfail(raises=ValueError)
+def test_format_acceleration_y_error():
+    ''' Tests the exceptions for pivot's movement and accelerations
+    '''
+    tol = 1e-5
+    h = 1e-4
+
+    accel_x = 0.0
+    wrong_accel_y = (1, 2) # Wrong acceleration, too many dimensions
+
+    accel_x, accel_y = _format_accelerations(accel_x, wrong_accel_y, is_acceleration=True, h=h)
