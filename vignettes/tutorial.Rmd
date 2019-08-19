@@ -1,5 +1,5 @@
 ---
-title: "Tutorial"
+title: "Pendulum basic tutorial"
 author: "Pablo Rodríguez-Sánchez"
 date: "August 16, 2019"
 output: html_document
@@ -82,7 +82,7 @@ $$
 # Pivot's position
 ## The pivot is moving, so its position is a function of time
 pos_x = lambda t : np.arctan(5*t)
-pos_y = lambda t : 0*t
+pos_y = 0
 ```
 
 As in any other mechanical problem, we need to introduce the initial conditions $(\theta_0, \omega_0)$ and the simulation times.
@@ -151,7 +151,7 @@ $$
 # Pivot's position
 ## The pivot is moving, so its position is a function of time
 pos_x = lambda t : np.arctan(3*t)
-pos_y = lambda t : 0.0*t
+pos_y = 0
 ```
 
 As in any other mechanical problem, we need to introduce the initial conditions $(\theta_0, \omega_0, \theta_1, \omega_1)$ and the simulation times.

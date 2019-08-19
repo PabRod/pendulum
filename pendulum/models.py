@@ -23,7 +23,7 @@ def dpendulum(state, t=0, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, l=1.0
     ## Flexible input interpretation
     accel_x, accel_y = _format_accelerations(pivot_x, pivot_y, is_acceleration, h)
 
-    ## Dynamical equation
+    ## Dynamical equation (see drafts/Derivation ni_pendulum.pdf)
     th, w = state
     dydt = [w,
             -g/l * np.sin(th)  - d * w - accel_x(t) * np.cos(th) / l  - accel_y(t) * np.sin(th) / l]
@@ -115,6 +115,7 @@ def ddouble_pendulum(state, t=0, pivot_x=0.0, pivot_y=0.0, is_acceleration=False
                                              [m2*l1*l2*np.sin(th1-th2)*w1**2 - m2*g*l2*np.sin(th2) -m2*l2*(accel_x(t)*np.cos(th2) + accel_y(t)*np.sin(th2))]])
 
     ## Dynamical equations
+    ## See (drafts/Derivation double_pendulum.pdf)
     th1, w1, th2, w2 = state
     dydt = np.dot(mat(th1, th2), F(th1, w1, th2, w2, t))
 
