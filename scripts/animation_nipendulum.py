@@ -10,7 +10,7 @@ d = 1 # Damping
 
 # Pivot's position
 ## The pivot is moving, so its position is a function of time
-pos_x = lambda t : np.arctan(5*t)
+pos_x = lambda t : np.arctan(25*t) #-1.0*(t <=0) + (t > 0)*1.0 # np.arctan(25*t)
 pos_y = lambda t : 0*t
 
 ts = np.linspace(-5, 10, 1000) # Simulation time

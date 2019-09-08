@@ -35,7 +35,7 @@ def test_damped_pendulum():
     assert(last_w == pytest.approx(0.0, tol))
 
 def test_undamped_pendulum():
-    ''' Test the long-term solution of a damped pendulum
+    ''' Test the long-term solution of a undamped pendulum
     '''
     tol = 1e-8
 
@@ -121,7 +121,7 @@ def test_ddouble_pendulum(input, exp_output):
 
     df = ddouble_pendulum(input, 0)
 
-    assert(df == pytest.approx(exp_output, tol)), \
+    assert(df == pytest.approx(exp_output, tol)), \ #TODO: assert equal / almost equal
         'pendulum is not behaving as expected'
 
 def test_ni_double_pendulum_no_acceleration():

@@ -63,6 +63,7 @@ def pendulum(yinit, ts, pivot_x=0.0, pivot_y=0.0, is_acceleration=False, l=1.0, 
     ## Avoid wrong inputs
     if (len(yinit) != 2): # The initial conditions are (th_0, w_0). No more, and no less
         raise ValueError('Wrong initial condition (yinit). Expected 2-elements vector')
+        #TODO: consider using asserts
 
     ## Set the problem
     f = lambda state, t : dpendulum(state, t, pivot_x, pivot_y, is_acceleration, l, g, d, h)
