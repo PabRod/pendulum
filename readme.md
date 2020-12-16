@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/PabRod/pendulum.svg?branch=master)](https://travis-ci.com/PabRod/pendulum)
+[![Build Status](https://github.com/PabRod/pendulum/workflows/Python%20package/badge.svg?branch=master)](https://github.com/PabRod/pendulum/actions)
 [![Code coverage](https://codecov.io/gh/PabRod/pendulum/graph/badge.svg)](https://codecov.io/gh/PabRod/pendulum)
 [![codecov](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
